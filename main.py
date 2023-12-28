@@ -6,10 +6,11 @@ import socket
 import wifi
 
 
-"""
-Return a list with ssid and mac addresses
-"""
+
 def get_wifi_info(interface) -> list:
+    """
+    Return a list with ssid and mac addresses
+    """
     try:
         iw_cells = wifi.Cell.all(interface)
         wifi_info = [(cell.ssid, cell.address) for cell in iw_cells]
