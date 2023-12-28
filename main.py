@@ -2,7 +2,6 @@
 Hacking tool that gets default passwords for brazilian IPS
 """
 import argparse
-import socket
 import wifi
 
 
