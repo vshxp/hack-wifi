@@ -13,9 +13,17 @@ def get_wifi_info(interface) -> list:
         iw_cells = wifi.Cell.all(interface)
         wifi_info = [(cell.ssid, cell.address) for cell in iw_cells]
         return wifi_info
+    except wifi.exceptions.InterfaceError as ie:
+        print(f"Interface error occurred: {ie}")
+    except wifi.exceptions.ScanError as se:
+        print(f"Scan error occurred: {se}")
+    except wifi.exceptions.CellNotFound as cnf:
+        print(f"Cell not found error occurred: {cnf}")
+    except wifi.exceptions.CellParsingError as cpe:
+        print(f"Cell parsing error occurred: {cpe}")
     except Exception as e:
-        print(f"An error occurred: {e}")
-        return None
+        print(f"An unexpected error occurred: {e}")
+    return None
 
 
 def is_vuln(ssid: str) -> bool:
