@@ -12,11 +12,16 @@ pip install -r requirements.txt
 
 ## Usage
 ```
-python main.py
+usage: main.py [-h] [-i INTERFACE]
+
+options:
+  -h, --help            show this help message and exit
+  -i INTERFACE, --interface INTERFACE
+                        Specify the network interface (default: wlan)
 ```
 
 ## TODO's
 
-- [ ] enable set wlan interface as an argument
+- [x] enable set wlan interface as an argument
 - [ ] create a nice header
 - [ ] increment password report as table
