@@ -17,6 +17,6 @@ python main.py
 
 ## TODO's
 
-- [ ] enable set wlan interface asa argument
+- [ ] enable set wlan interface as an argument
 - [ ] create a nice header
 - [ ] increment password report as table

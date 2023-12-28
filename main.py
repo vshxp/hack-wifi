@@ -1,13 +1,10 @@
-import os
-import struct
-import array
-import fcntl
+
 import socket
 import wifi
-import re
+import argparse
 
 
-def get_wifi_info(interface='wlp0s20f3'):
+def get_wifi_info(interface):
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sockfd = sock.fileno()
@@ -29,7 +26,7 @@ def is_vuln(ssid: str) -> bool:
 
 def own_vivofibra(ssid: str,mac:str) -> str:
 	return mac.replace(":","").lower()[2:8] + ssid.split("-")[1].lower()
-	 
+
 
 def own_vivo(mac: str) -> str:
 	return mac.replace(":","").upper()[2:]
@@ -53,4 +50,8 @@ def wifi_owner(wifi_list: list):
 
 
 if __name__ == "__main__":
-    wifi_owner(get_wifi_info())
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--interface", default="wlp0s20f3", help="Specify the network interface (default: wlp0s20f3)")
+    
+    args = parser.parse_args()
+    wifi_owner(get_wifi_info(args.interface))
